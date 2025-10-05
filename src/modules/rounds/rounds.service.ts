@@ -35,13 +35,30 @@ export class RoundsService {
   }
 
   async getRoundById(id: string) {
-    const r = await this.roundModel.findByPk(id);
-    if (!r) throw new NotFoundException("Round not found");
+    const round = await this.roundModel.findByPk(id, {
+      include: [
+        {
+          model: this.playerRoundModel,
+          as: "playerStats",
+          include: [
+            { model: User, as: "user", attributes: ["id", "username", "role"] },
+          ],
+        },
+      ],
+    });
 
-    // Приведение totalPoints к числу
+    if (!round) throw new NotFoundException("Round not found");
+
     return {
-      ...r.toJSON(),
-      totalPoints: Number(r.totalPoints),
+      ...round.toJSON(),
+      totalPoints: Number(round.totalPoints),
+      playerStats: round.playerStats.map((prs) => ({
+        userId: prs.userId,
+        username: prs.user?.username,
+        role: prs.user?.role,
+        taps: Number(prs.taps),
+        points: Number(prs.points),
+      })),
     };
   }
 

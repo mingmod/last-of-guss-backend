@@ -26,8 +26,6 @@ export class UsersService {
       return created;
     }
     const match = await bcrypt.compare(password, found.passwordHash);
-    console.log(match, password, found.passwordHash, "TESt");
-
     if (!match) throw new Error("Invalid password");
     return found;
   }

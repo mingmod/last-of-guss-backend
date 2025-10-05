@@ -103,11 +103,11 @@ describe("The Last of Guss - E2E", () => {
 
   it("Check round total points updated", async () => {
     await new Promise((resolve) => setTimeout(resolve, rouindEndTime));
-    console.log(roundId, "test12");
     const res = await request(app.getHttpServer())
       .get(`/rounds/${roundId}`)
       .expect(200);
 
     expect(res.body.totalPoints).toBeGreaterThanOrEqual(1);
+    console.log(res.body, "TESt");
   });
 });

@@ -1,8 +1,17 @@
-import { Table, Column, Model, DataType } from "sequelize-typescript";
+import {
+  Table,
+  Column,
+  Model,
+  DataType,
+  ForeignKey,
+  BelongsTo,
+} from "sequelize-typescript";
+import { Round } from "./round.model";
+import { User } from "../users/user.model";
 
 @Table({
   tableName: "player_round_stats",
-  timestamps: true,
+  timestamps: true, // use createdAt/updatedAt
   indexes: [
     {
       unique: true,
@@ -22,15 +31,24 @@ export class PlayerRound extends Model<
   })
   id!: string;
 
+  @ForeignKey(() => Round)
   @Column({ type: DataType.UUID, allowNull: false })
   roundId!: string;
 
+  @ForeignKey(() => User)
   @Column({ type: DataType.UUID, allowNull: false })
   userId!: string;
 
   @Column({ type: DataType.BIGINT, defaultValue: 0 })
-  taps!: number; // number type
+  taps!: number;
 
   @Column({ type: DataType.BIGINT, defaultValue: 0 })
-  points!: number; // number type
+  points!: number;
+
+  // Associations
+  @BelongsTo(() => Round, "roundId")
+  round!: Round;
+
+  @BelongsTo(() => User, "userId")
+  user!: User;
 }

@@ -4,8 +4,10 @@ import {
   Model,
   DataType,
   ForeignKey,
+  HasMany,
 } from "sequelize-typescript";
 import { User } from "../users/user.model";
+import { PlayerRound } from "./player-round.model";
 
 @Table({ tableName: "rounds", timestamps: true })
 export class Round extends Model<
@@ -14,7 +16,7 @@ export class Round extends Model<
     startAt: Date;
     endAt: Date;
     createdBy?: string;
-    totalPoints?: number; // include this in create input
+    totalPoints?: number;
   }
 > {
   @Column({
@@ -44,4 +46,7 @@ export class Round extends Model<
     field: "created_at",
   })
   createdAt!: Date;
+
+  @HasMany(() => PlayerRound, "roundId")
+  playerStats!: PlayerRound[];
 }

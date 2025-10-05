@@ -5,6 +5,7 @@ import {
   Body,
   BadRequestException,
   ForbiddenException,
+  Get,
 } from "@nestjs/common";
 import { RoundsService } from "./rounds.service";
 import { UsersService } from "../users/users.service";
@@ -52,5 +53,10 @@ export class RoundsController {
     // Call rounds service to process tap
     const result = await this.roundsService.tap(id, user);
     return result;
+  }
+
+  @Get(":id")
+  async getRound(@Param("id") id: string) {
+    return this.roundsService.getRoundById(id);
   }
 }
