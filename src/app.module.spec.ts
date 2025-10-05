@@ -108,6 +108,5 @@ describe("The Last of Guss - E2E", () => {
       .expect(200);
 
     expect(res.body.totalPoints).toBeGreaterThanOrEqual(1);
-    console.log(res.body, "TESt");
   });
 });
