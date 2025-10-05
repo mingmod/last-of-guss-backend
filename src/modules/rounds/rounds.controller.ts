@@ -20,7 +20,7 @@ class CreateRoundDto {
 export class RoundsController {
   constructor(
     private roundsService: RoundsService,
-    private usersService: UsersService // inject UsersService
+    private usersService: UsersService
   ) {}
 
   @Post()
@@ -43,14 +43,9 @@ export class RoundsController {
   @Post(":id/tap")
   async tap(@Param("id") id: string, @Body() body: { userId: string }) {
     if (!body.userId) throw new BadRequestException("userId required");
-
     const user = await this.usersService.findById(body.userId);
     if (!user) throw new BadRequestException("User not found");
-
-    // Only allow survivors to tap
     if (user.role !== "survivor") return { points: 0 };
-
-    // Call rounds service to process tap
     const result = await this.roundsService.tap(id, user);
     return result;
   }
@@ -58,5 +53,10 @@ export class RoundsController {
   @Get(":id")
   async getRound(@Param("id") id: string) {
     return this.roundsService.getRoundById(id);
+  }
+
+  @Get()
+  async list() {
+    return this.roundsService.getAllRounds();
   }
 }

@@ -11,7 +11,7 @@ import { User } from "../users/user.model";
 
 @Table({
   tableName: "player_round_stats",
-  timestamps: true, // use createdAt/updatedAt
+  timestamps: true,
   indexes: [
     {
       unique: true,

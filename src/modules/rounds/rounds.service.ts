@@ -118,4 +118,17 @@ export class RoundsService {
       return { myTaps: newTaps, myPoints: newPoints };
     });
   }
+
+  async getAllRounds() {
+    const rounds = await this.roundModel.findAll({
+      order: [["startAt", "DESC"]],
+    });
+    return rounds.map((r) => ({
+      id: r.id,
+      startAt: r.startAt,
+      endAt: r.endAt,
+      totalPoints: Number(r.totalPoints),
+      createdBy: r.createdBy,
+    }));
+  }
 }

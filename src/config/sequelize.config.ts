@@ -13,6 +13,6 @@ export const sequelizeConfig: SequelizeModuleOptions = {
   password: process.env.DATABASE_PASSWORD || "postgres",
   database: process.env.DATABASE_NAME || "the_last_of_guss",
   models: [User, Round, PlayerRound],
-  synchronize: true, // для dev; в продакшне использовать миграции
+  synchronize: true,
   logging: false,
 };
