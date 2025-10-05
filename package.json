@@ -1,7 +1,7 @@
 {
   "name": "last-of-guss-backend",
   "version": "1.0.0",
-  "description": "",
+  "description": "A short time created demo/test project",
   "main": "dist/main.js",
   "scripts": {
     "test:db": "ts-node src/utils/test-db.ts",
